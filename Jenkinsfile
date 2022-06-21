@@ -31,7 +31,7 @@ pipeline {
       }
       stage('Kubernetes Deployment - DEV') {
         steps {
-          withKubeConfig([credentialsId: 'kubeconfig']) {
+          withKubeConfig([credentialsId: 'kubeconfig', serverUrl:'']) {
             sh "sed -i 's#replace#avengu/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
             sh "kubectl apply -f k8s_deployment_service.yaml"
           }
