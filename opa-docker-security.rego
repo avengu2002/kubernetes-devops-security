@@ -80,7 +80,7 @@ forbidden_users = [
 
 deny[msg] {
 #    command := "user"
-    # input[i].Cmd == "user"
+    input[i].Cmd == "user"
     users := [name | input[i].Cmd == "user"; name := input[i].Value]
     lastuser := users[count(users)-1]
     contains(lower(lastuser[_]), forbidden_users[_])
@@ -95,14 +95,14 @@ deny[msg] {
     msg = sprintf("Line %d: Do not use 'sudo' command", [i])
 }
 
-# Use multi-stage builds
-default multi_stage = false
-multi_stage = true {
-    input[i].Cmd == "copy"
-    val := concat(" ", input[i].Flags)
-    contains(lower(val), "--from=")
-}
-deny[msg] {
-    multi_stage == false
-    msg = sprintf("You COPY, but do not appear to use multi-stage builds...", [])
-}
+# # Use multi-stage builds
+# default multi_stage = false
+# multi_stage = true {
+#     input[i].Cmd == "copy"
+#     val := concat(" ", input[i].Flags)
+#     contains(lower(val), "--from=")
+# }
+# deny[msg] {
+#     multi_stage == false
+#     msg = sprintf("You COPY, but do not appear to use multi-stage builds...", [])
+# }
