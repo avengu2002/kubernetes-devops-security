@@ -40,7 +40,15 @@ pipeline {
       //       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
       //     }
       //   }
-      // }      
+      // }
+      
+      stage('Trivy Vulnerability Scan - Docker') {
+        steps {
+              sh "bash trivy-docker-image-scan.sh"
+            }
+          
+        }
+                  
 
       stage('Docker Build and Push') {
         steps {
