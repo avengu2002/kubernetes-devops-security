@@ -55,21 +55,21 @@ warn[msg] {
     msg = sprintf("Line: %d: Do not upgrade your system packages: %s", [i, val])
 }
 
-# # Do not use ADD if possible
-# deny[msg] {
-#     input[i].Cmd == "add"
-#     msg = sprintf("Line %d: Use COPY instead of ADD", [i])
-# }
+# Do not use ADD if possible
+deny[msg] {
+    input[i].Cmd == "add"
+    msg = sprintf("Line %d: Use COPY instead of ADD", [i])
+}
 
-# # Any user...
-# any_user {
-#     input[i].Cmd == "user"
-#  }
+# Any user...
+any_user {
+    input[i].Cmd == "user"
+ }
 
-# deny[msg] {
-#     not any_user
-#     msg = "Do not run as root, use USER instead"
-# }
+deny[msg] {
+    not any_user
+    msg = "Do not run as root, use USER instead"
+}
 
 # # ... but do not root
 # forbidden_users = [
