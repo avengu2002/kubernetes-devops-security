@@ -71,28 +71,28 @@ deny[msg] {
     msg = "Do not run as root, use USER instead"
 }
 
-# # ... but do not root
-# forbidden_users = [
-#     "root",
-#     "toor",
-#     "0"
-# ]
+# ... but do not root
+forbidden_users = [
+    "root",
+    "toor",
+    "0"
+]
 
-# deny[msg] {
-#     command := "user"
-#     users := [name | input[i].Cmd == "user"; name := input[i].Value]
-#     lastuser := users[count(users)-1]
-#     contains(lower(lastuser[_]), forbidden_users[_])
-#     msg = sprintf("Line %d: Last USER directive (USER %s) is forbidden", [i, lastuser])
-# }
+deny[msg] {
+    command := "user"
+    users := [name | input[i].Cmd == "user"; name := input[i].Value]
+    lastuser := users[count(users)-1]
+    contains(lower(lastuser[_]), forbidden_users[_])
+    msg = sprintf("Line %d: Last USER directive (USER %s) is forbidden", [i, lastuser])
+}
 
-# # Do not sudo
-# deny[msg] {
-#     input[i].Cmd == "run"
-#     val := concat(" ", input[i].Value)
-#     contains(lower(val), "sudo")
-#     msg = sprintf("Line %d: Do not use 'sudo' command", [i])
-# }
+# Do not sudo
+deny[msg] {
+    input[i].Cmd == "run"
+    val := concat(" ", input[i].Value)
+    contains(lower(val), "sudo")
+    msg = sprintf("Line %d: Do not use 'sudo' command", [i])
+}
 
 # # Use multi-stage builds
 # default multi_stage = false
