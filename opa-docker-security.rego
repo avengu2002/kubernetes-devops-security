@@ -71,12 +71,12 @@ deny[msg] {
     msg = "Do not run as root, use USER instead"
 }
 
-# # ... but do not root
-# forbidden_users = [
-#     "root",
-#     "toor",
-#     "0"
-# ]
+# ... but do not root
+forbidden_users = [
+    "root",
+    "toor",
+    "0"
+]
 
 # deny[msg] {
 #     command := "user"
