@@ -39,16 +39,6 @@ pipeline {
           }
         }
       }
-      // stage('Vulnerability Scan - Docker ') {
-      //   steps {
-      //     sh "mvn dependency-check:check"
-      //   }
-      //   post {
-      //     always {
-      //       dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-      //     }
-      //   }
-      // }
       
       stage('Vulnerability Scan - Docker') {
         steps {
@@ -73,11 +63,6 @@ pipeline {
         }
       }
 
-      // stage('Vulnerability Scan - Kubernetes') {
-      //   steps {
-      //     sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
-      //   }
-      // }
 
       stage('Vulnerability Scan - Kubernetes') {
         steps {
@@ -92,30 +77,6 @@ pipeline {
         }
       }
 
-      // stage('Vulnerability Scan - Kubernetes') {
-      //   steps {
-      //     parallel(
-      //       "OPA Scan": {
-      //         sh 'docker run --rm -v $(pwd):/project openpolicyagent/conftest test --policy opa-k8s-security.rego k8s_deployment_service.yaml'
-      //       },
-      //       "Kubesec Scan": {
-      //         sh "bash kubesec-scan.sh"
-      //       },
-      //       "Trivy Scan": {
-      //       sh "bash trivy-k8s-scan.sh"
-      //     }
-      //     )
-      //   }
-      // }
-
-      // stage('Kubernetes Deployment - DEV') {
-      //   steps {
-      //     withKubeConfig([credentialsId: 'kubeconfig', serverUrl:'']) {
-      //       sh "sed -i 's#replace#avengu/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
-      //       sh "kubectl apply -f k8s_deployment_service.yaml"
-      //     }
-      //   }
-      // }
 
       stage('K8S Deployment - DEV') {
         steps {
@@ -162,17 +123,17 @@ pipeline {
       steps {
         script {
 
-          parallel(
-            "Master": {
-              sh "bash cis-master.sh"
-            },
-            "Etcd": {
-              sh "bash cis-etcd.sh"
-            },
-            "Kubelet": {
+          // parallel(
+          //   "Master": {
+          //     sh "bash cis-master.sh"
+          //   },
+          //   "Etcd": {
+          //     sh "bash cis-etcd.sh"
+          //   },
+            // "Kubelet": {
               sh "bash cis-kubelet.sh"
-            }
-          )
+            // }
+          // )
 
         }
       }
