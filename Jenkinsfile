@@ -131,7 +131,7 @@ pipeline {
           //     sh "bash cis-etcd.sh"
           //   },
             // "Kubelet": {
-              sh "bash cis-kubelet"
+              sh "bash cis-kubelet.sh"
             // }
           // )
 
