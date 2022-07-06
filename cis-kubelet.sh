@@ -2,8 +2,9 @@
 #cis-kubelet.sh
 
 total_fail_json=$(docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v "$(which kubectl):/usr/local/mount-from-host/bin/kubectl" -v ~/.kube:/.kube -e KUBECONFIG=/.kube/config -t "aquasec/kube-bench:latest"  run --version 1.20 --targets node --check 4.2.1,4.2.2 --json)
-echo "$total_fail_json"
+
 total_fail = $("$total_fail_json" | jq .Totals.total_fail)
+echo "$total_fail"
 
 if [[ "$total_fail" -ne 0 ]];
         then
