@@ -3,7 +3,7 @@
 
 # total_string=$(docker run --pid=host -v /etc:/etc:ro -v /var:/var:ro -v "$(which kubectl):/usr/local/mount-from-host/bin/kubectl" -v ~/.kube:/.kube -e KUBECONFIG=/.kube/config -t "aquasec/kube-bench:latest"  run --version 1.20 --targets node --check 4.2.1,4.2.2 --json)
 # total_fail=$(echo $total_string | jq '.Totals.total_fail')
-total_fail=$(kube-bench run --targets node  --version 1.20 --check 2.2 --json | jq .[].total_fail)
+total_fail=$(kube-bench run --targets node  --version 1.20 --check 4.2.1,4.2.2 --json | jq .[].total_fail)
 echo "$total_fail"
 
 if [[ "$total_fail" -ne 0 ]];
